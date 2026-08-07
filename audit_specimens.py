@@ -37,10 +37,22 @@ WORKFLOW_ORDER = ["DNA", "COI", "28S"]
 # 未描述種的命名模式——這些沒有中文俗名是「結構性缺失」，不是資料錯誤
 UNDESCRIBED_PATTERN = r"(?:sp\.?\d*$|cf\.)"
 
-# 經去識別化處理、已一般化至縣市層級的地名。
+# 經去識別化處理、已一般化至縣市／地區層級的地名。
 # 這些紀錄的「一個地名對應多組座標」是刻意設計的結果，不是資料錯誤，
 # 因此在 GEO-02 中必須排除，否則會與去識別化政策互相衝突。
-GENERALISED_LOCALITY_PATTERN = r"(?:County|City), (?:Taiwan|India|Philippines|Japan)$"
+#
+# 此處刻意使用明確清單而非樣式比對：初版以 r"(?:County|City), ..." 比對，
+# 漏掉了「Tamil Nadu, India」「Luzon, Philippines」等不含 County/City 的
+# 一般化標籤，導致本該被排除的紀錄仍被判為違規。
+# 排除清單與 deidentify_localities.py 的 COUNTY_LOOKUP 輸出值必須保持同步。
+GENERALISED_LOCALITIES = {
+    "Pingtung County, Taiwan", "Chiayi County, Taiwan", "Nantou County, Taiwan",
+    "Taitung County, Taiwan", "Yilan County, Taiwan", "Hualien County, Taiwan",
+    "Miaoli County, Taiwan", "Yunlin County, Taiwan", "Hsinchu County, Taiwan",
+    "New Taipei City, Taiwan", "Taipei City, Taiwan", "Taichung City, Taiwan",
+    "Kaohsiung City, Taiwan", "Tainan City, Taiwan", "Keelung City, Taiwan",
+    "Tamil Nadu, India", "Luzon, Philippines", "Okinawa, Japan",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -89,8 +101,7 @@ def check_locality(df):
     資料品質規則之間的這類衝突，需要在規則層級明確處理。
     """
     named = df.dropna(subset=["Latitude", "Longitude"])
-    named = named[~named["Locality"].str.contains(
-        GENERALISED_LOCALITY_PATTERN, regex=True, na=False)]
+    named = named[~named["Locality"].isin(GENERALISED_LOCALITIES)]
     counts = named.groupby("Locality")[["Latitude", "Longitude"]].nunique()
     conflicted = counts[(counts["Latitude"] > 1) | (counts["Longitude"] > 1)].index
     return named[named["Locality"].isin(conflicted)][

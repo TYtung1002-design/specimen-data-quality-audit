@@ -25,10 +25,8 @@ Collection_Day          4  2.6
 二、規則檢核結果
 --------------------------------------------------------------------
 
-[MEDIUM] GEO-02 — 同一地點名稱對應座標不一致  (5 筆)
+[MEDIUM] GEO-02 — 同一地點名稱對應座標不一致  (3 筆)
  ABARA_code                                 Locality  Latitude  Longitude
-ABARA_05048                        Tamil Nadu, India  12.58000   78.66000
-ABARA_05445                        Tamil Nadu, India  12.58000   78.63000
 ABARA_05483 南投縣中寮鄉 Zhongliao Township, Nantou County  23.89977  120.78315
 ABARA_05484 南投縣中寮鄉 Zhongliao Township, Nantou County  23.93053  120.79890
 ABARA_05485 南投縣中寮鄉 Zhongliao Township, Nantou County  23.86646  120.78315
@@ -59,7 +57,7 @@ column symbols_used
 --------------------------------------------------------------------
   code severity           description  n_violations
 GEO-01     HIGH         台灣樣本座標落在合理範圍外             0
-GEO-02   MEDIUM         同一地點名稱對應座標不一致             5
+GEO-02   MEDIUM         同一地點名稱對應座標不一致             3
 FMT-01     HIGH  採集日欄位遭試算表軟體自動轉換為日期格式             0
 STD-01   MEDIUM          國別欄位的分類層級不一致             0
 STD-02   MEDIUM         同一學名對應到多個中文俗名             0
@@ -69,4 +67,4 @@ SEQ-01   MEDIUM  定序流程跳階：下游步驟已完成但上游未完成   
 SEQ-02      LOW        完成狀態符號在各欄位間不一致             3
 MIS-01      LOW 隨機缺失的中文俗名（同種其他個體已有紀錄）             0
 
-合計 17 筆違規，涉及 4 條規則。
+合計 15 筆違規，涉及 4 條規則。
