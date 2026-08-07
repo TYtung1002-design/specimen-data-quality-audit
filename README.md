@@ -227,6 +227,7 @@ GENERALISED_LOCALITY_PATTERN = r"(?:County|City), (?:Taiwan|India|Philippines|Ja
 pip install pandas
 python audit_specimens.py
 ```
+
 > 註： `deidentify_localities.py` 需以完整解析度的原始資料為輸入，該檔案不納入版本控制，因此本 repository 僅保留腳本供檢視。
 
 ## 檔案結構
