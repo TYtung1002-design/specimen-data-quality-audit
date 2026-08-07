@@ -1,0 +1,72 @@
+====================================================================
+標本資料庫品質稽核報告
+====================================================================
+資料來源：data/NCHU_Pringles.csv
+資料規模：154 筆標本 × 20 個欄位
+分類涵蓋：5 屬 / 15 個分類單元
+地理涵蓋：4 個國別標記
+時間跨度：2011–2025
+
+--------------------------------------------------------------------
+一、缺失值概況
+--------------------------------------------------------------------
+        column  n_missing  pct
+           28S        122 79.2
+           COI        117 76.0
+           DNA         71 46.1
+  Chinese_name         66 42.9
+          Elve         15  9.7
+     Longitude         13  8.4
+      Latitude         13  8.4
+Collection_Day          4  2.6
+       Storage          1  0.6
+
+--------------------------------------------------------------------
+二、規則檢核結果
+--------------------------------------------------------------------
+
+[MEDIUM] GEO-02 — 同一地點名稱對應座標不一致  (5 筆)
+ ABARA_code                                 Locality  Latitude  Longitude
+ABARA_05048                        Tamil Nadu, India  12.58000   78.66000
+ABARA_05445                        Tamil Nadu, India  12.58000   78.63000
+ABARA_05483 南投縣中寮鄉 Zhongliao Township, Nantou County  23.89977  120.78315
+ABARA_05484 南投縣中寮鄉 Zhongliao Township, Nantou County  23.93053  120.79890
+ABARA_05485 南投縣中寮鄉 Zhongliao Township, Nantou County  23.86646  120.78315
+
+[MEDIUM] REF-01 — 標本儲位與所屬屬別不符  (3 筆)
+ ABARA_code       Genus Species     Storage
+ABARA_05659 Bijoaraneus    sp.2 Pringles_01
+ABARA_05877 Bijoaraneus    sp.2 Pringles_01
+ABARA_06159   Eriovixia excelsa Pringles_01
+
+[MEDIUM] SEQ-01 — 定序流程跳階：下游步驟已完成但上游未完成  (6 筆)
+ ABARA_code DNA COI 28S missing_step completed_step
+ABARA_03882   ● NaN   ●          COI            28S
+ABARA_05543   ● NaN   ●          COI            28S
+ABARA_05603   ● NaN   ●          COI            28S
+ABARA_05652   ● NaN   ●          COI            28S
+ABARA_05682   ● NaN   ●          COI            28S
+ABARA_05999   ● NaN   ●          COI            28S
+
+[LOW] SEQ-02 — 完成狀態符號在各欄位間不一致  (3 筆)
+column symbols_used
+   DNA            ●
+   COI            ◐
+   28S            ●
+
+--------------------------------------------------------------------
+三、稽核總表
+--------------------------------------------------------------------
+  code severity           description  n_violations
+GEO-01     HIGH         台灣樣本座標落在合理範圍外             0
+GEO-02   MEDIUM         同一地點名稱對應座標不一致             5
+FMT-01     HIGH  採集日欄位遭試算表軟體自動轉換為日期格式             0
+STD-01   MEDIUM          國別欄位的分類層級不一致             0
+STD-02   MEDIUM         同一學名對應到多個中文俗名             0
+STD-03      LOW            以字串哨兵值表示缺失             0
+REF-01   MEDIUM           標本儲位與所屬屬別不符             3
+SEQ-01   MEDIUM  定序流程跳階：下游步驟已完成但上游未完成             6
+SEQ-02      LOW        完成狀態符號在各欄位間不一致             3
+MIS-01      LOW 隨機缺失的中文俗名（同種其他個體已有紀錄）             0
+
+合計 17 筆違規，涉及 4 條規則。

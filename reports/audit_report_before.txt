@@ -1,0 +1,103 @@
+====================================================================
+標本資料庫品質稽核報告
+====================================================================
+資料來源：data/NCHU_Pringles_raw.csv
+資料規模：154 筆標本 × 20 個欄位
+分類涵蓋：5 屬 / 15 個分類單元
+地理涵蓋：5 個國別標記
+時間跨度：2011–2025
+
+--------------------------------------------------------------------
+一、缺失值概況
+--------------------------------------------------------------------
+        column  n_missing  pct
+           28S        122 79.2
+           COI        117 76.0
+           DNA         71 46.1
+  Chinese_name         67 43.5
+          Elve         15  9.7
+      Latitude         13  8.4
+     Longitude         13  8.4
+Collection_Day          4  2.6
+
+--------------------------------------------------------------------
+二、規則檢核結果
+--------------------------------------------------------------------
+
+[HIGH] GEO-01 — 台灣樣本座標落在合理範圍外  (1 筆)
+ ABARA_code                Locality  Latitude  Longitude
+ABARA_05994 Pingtung County, Taiwan     22.05     102.83
+
+[MEDIUM] GEO-02 — 同一地點名稱對應座標不一致  (5 筆)
+ ABARA_code                                 Locality  Latitude  Longitude
+ABARA_05048                        Tamil Nadu, India  12.58000   78.66000
+ABARA_05445                        Tamil Nadu, India  12.58000   78.63000
+ABARA_05483 南投縣中寮鄉 Zhongliao Township, Nantou County  23.89977  120.78315
+ABARA_05484 南投縣中寮鄉 Zhongliao Township, Nantou County  23.93053  120.79890
+ABARA_05485 南投縣中寮鄉 Zhongliao Township, Nantou County  23.86646  120.78315
+
+[HIGH] FMT-01 — 採集日欄位遭試算表軟體自動轉換為日期格式  (3 筆)
+ ABARA_code  Collection_Year  Collection_Month Collection_Day
+ABARA_05048             2023                 8     08/16/2025
+ABARA_05445             2024                 7     02/12/2025
+ABARA_05454             2024                 7     02/12/2025
+
+[MEDIUM] STD-01 — 國別欄位的分類層級不一致  (6 筆)
+ ABARA_code Country                                                  Locality
+ABARA_05532 Okinawa  與那覇岳 Yonaha Mt. Trail, Kunigami District, Okinawa County
+ABARA_05533 Okinawa  與那覇岳 Yonaha Mt. Trail, Kunigami District, Okinawa County
+ABARA_05540 Okinawa 大宜味村 Oogimison Village, Kunigami District, Okinawa County
+ABARA_05542 Okinawa 大宜味村 Oogimison Village, Kunigami District, Okinawa County
+ABARA_05543 Okinawa 大宜味村 Oogimison Village, Kunigami District, Okinawa County
+ABARA_05544 Okinawa 大宜味村 Oogimison Village, Kunigami District, Okinawa County
+
+[MEDIUM] STD-02 — 同一學名對應到多個中文俗名  (2 筆)
+ ABARA_code   Scientific_name Chinese_name
+ABARA_05824 Eriovixia excelsa        艾瑟毛圓蛛
+ABARA_06156 Eriovixia excelsa        艾氏毛圓蛛
+
+[LOW] STD-03 — 以字串哨兵值表示缺失  (1 筆)
+ ABARA_code  column   value
+ABARA_00275 Storage Missing
+
+[MEDIUM] REF-01 — 標本儲位與所屬屬別不符  (3 筆)
+ ABARA_code       Genus Species     Storage
+ABARA_05659 Bijoaraneus    sp.2 Pringles_01
+ABARA_05877 Bijoaraneus    sp.2 Pringles_01
+ABARA_06159   Eriovixia excelsa Pringles_01
+
+[MEDIUM] SEQ-01 — 定序流程跳階：下游步驟已完成但上游未完成  (6 筆)
+ ABARA_code DNA COI 28S missing_step completed_step
+ABARA_03882   ● NaN   ●          COI            28S
+ABARA_05543   ● NaN   ●          COI            28S
+ABARA_05603   ● NaN   ●          COI            28S
+ABARA_05652   ● NaN   ●          COI            28S
+ABARA_05682   ● NaN   ●          COI            28S
+ABARA_05999   ● NaN   ●          COI            28S
+
+[LOW] SEQ-02 — 完成狀態符號在各欄位間不一致  (3 筆)
+column symbols_used
+   DNA            ●
+   COI            ◐
+   28S            ●
+
+[LOW] MIS-01 — 隨機缺失的中文俗名（同種其他個體已有紀錄）  (1 筆)
+ ABARA_code   Scientific_name Chinese_name
+ABARA_03882 Eriovixia excelsa          NaN
+
+--------------------------------------------------------------------
+三、稽核總表
+--------------------------------------------------------------------
+  code severity           description  n_violations
+GEO-01     HIGH         台灣樣本座標落在合理範圍外             1
+GEO-02   MEDIUM         同一地點名稱對應座標不一致             5
+FMT-01     HIGH  採集日欄位遭試算表軟體自動轉換為日期格式             3
+STD-01   MEDIUM          國別欄位的分類層級不一致             6
+STD-02   MEDIUM         同一學名對應到多個中文俗名             2
+STD-03      LOW            以字串哨兵值表示缺失             1
+REF-01   MEDIUM           標本儲位與所屬屬別不符             3
+SEQ-01   MEDIUM  定序流程跳階：下游步驟已完成但上游未完成             6
+SEQ-02      LOW        完成狀態符號在各欄位間不一致             3
+MIS-01      LOW 隨機缺失的中文俗名（同種其他個體已有紀錄）             1
+
+合計 31 筆違規，涉及 10 條規則。
